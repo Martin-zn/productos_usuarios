@@ -13,6 +13,18 @@ class Producto extends Model
         'precio', 
         'descripcion',
         'imagen',
+        'path',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($producto) {
+            if (!$producto->path) {
+                $producto->path = 'producto-' . (Producto::max('id') + 1);
+            }
+        });
+    }
     
 }
