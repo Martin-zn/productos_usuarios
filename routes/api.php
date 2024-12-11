@@ -18,3 +18,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
 Route::get('/me', [AuthController::class, 'me'])->middleware('auth:api');
+
+
+
+Route::put('/users/{id}/tipo_usuario', [UsuarioController::class, 'updateTipoUsuario'])->middleware('auth:api');

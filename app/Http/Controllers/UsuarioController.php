@@ -58,4 +58,28 @@ class UsuarioController extends Controller
     public function profile(){
         return response()->json(Auth::user());
     }
+
+    public function updateTipoUsuario(Request $request, $id)
+    {
+        // Valida los datos recibidos
+        $request->validate([
+            'tipo_usuario' => 'required|string|in:cliente,trabajador',
+        ]);
+
+        // Encuentra el usuario por ID
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['error' => 'Usuario no encontrado'], 404);
+        }
+
+        // Actualiza el tipo_usuario
+        $user->tipo_usuario = $request->tipo_usuario;
+        $user->save();
+
+        return response()->json([
+            'message' => 'El tipo de usuario se ha actualizado correctamente',
+            'user' => $user,
+        ], 200);
+    }
 }
